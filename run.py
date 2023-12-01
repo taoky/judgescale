@@ -29,10 +29,11 @@ def main():
     os.makedirs("logs", exist_ok=True)
     for i in range(TASKS):
         f = open(f"logs/{i}.log", "w")
-        f.writelines([f"Start time: {datetime.now()}"])
+        f.write(f"Start time: {datetime.now()}\n")
+        f.flush()
         tasks.append(
             subprocess.Popen(
-                f"while true; do sudo ./judgescale -P {i} ./prog 2>/dev/null ; done",
+                f"while true; do sudo ./judgescale -P {i} ./prog 2>/dev/null | cat - ; done",
                 shell=True,
                 stdin=None,
                 stdout=f,
